@@ -21,12 +21,12 @@ class DBHelper{
             print("creating a new one");
             return db.execute(
               "CREATE TABLE $_tableName("
-                  "id INTERGER PRIMARY KEY AUTOINCERMENT, "
+                  "id INTEGER PRIMARY KEY AUTOINCREMENT, "
                   "title STRING, note TEXT, date STRING, "
                   "startTime STRING, endTime STRING, "
-                  "remind INTERGER, repeat STRING, "
-                  "color INTERGER, "
-                  "isCompleted INTERGER)",
+                  "remind INTEGER, repeat STRING, "
+                  "color INTEGER, "
+                  "isCompleted INTEGER)",
 
             );
           },
@@ -42,6 +42,11 @@ class DBHelper{
     return await _db?.insert(_tableName, task!.toJson())??1;
   }
 
-// Thành
+  static Future<List<Map<String, dynamic>>>query() async{
+    print("query funtion called");
+    return await _db!.query(_tableName);
+  }
+
+
 
 }

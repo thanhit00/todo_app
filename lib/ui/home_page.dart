@@ -1,6 +1,7 @@
 import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_to_do_app/controllers/task_controller.dart';
 import 'package:flutter_to_do_app/services/notification_service.dart';
 import 'package:flutter_to_do_app/services/theme_services.dart';
 import 'package:flutter_to_do_app/ui/add_task_bar.dart';
@@ -18,6 +19,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   DateTime _selectedDate = DateTime.now();
+  final _taskController = Get.put(TaskController());
 
   var notifyHelper;
   @override
@@ -40,10 +42,26 @@ class _HomePageState extends State<HomePage> {
         children: [
           _addTaskBar(),
           _addDateBar(),
+          _showTasks(),
 
         ],
       )
 
+    );
+  }
+  _showTasks(){
+    return Expanded(
+        child:Obx((){
+          return ListView.builder(
+              itemCount: _taskController.taskList.length,
+              itemBuilder: (_, context){
+            return Container(
+              width: 100,
+              height: 50,
+              color:Colors.green,
+            );
+          });
+        }),//OBS
     );
   }
 

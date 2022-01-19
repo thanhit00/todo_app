@@ -147,7 +147,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                     });
                   },
                   style: subTitleStyle,
-                  items:repeatList.map<DropdownMenuItem<String>>((String value){
+                  items:repeatList.map<DropdownMenuItem<String>>((String? value){
                     return DropdownMenuItem<String>(
                       value: value,
                       child: Text(value!, style: TextStyle(color: Colors.grey)),

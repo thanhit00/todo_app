@@ -48,7 +48,7 @@ class DBHelper{
   }
 
   static delete(Task task)async{
-    await _db!.delete(_tableName, where:'id=?', whereArgs: [task.id]);
+     return await _db!.delete(_tableName, where:'id=?', whereArgs: [task.id]);
 
 
 

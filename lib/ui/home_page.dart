@@ -2,11 +2,13 @@ import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_to_do_app/controllers/task_controller.dart';
+import 'package:flutter_to_do_app/models/task.dart';
 import 'package:flutter_to_do_app/services/notification_service.dart';
 import 'package:flutter_to_do_app/services/theme_services.dart';
 import 'package:flutter_to_do_app/ui/add_task_bar.dart';
 import 'package:flutter_to_do_app/ui/theme.dart';
 import 'package:flutter_to_do_app/ui/widgets/button.dart';
+import 'package:flutter_to_do_app/ui/widgets/task_tile.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -60,26 +62,34 @@ class _HomePageState extends State<HomePage> {
 
               itemBuilder: (_, index){
                 print(_taskController.taskList.length);
-                return GestureDetector(
-                  onTap: (){
-                    _taskController.delete(_taskController.taskList[index]);
-                  },
-                  child: Container(
-                    width: 100,
-                    height: 50,
-                    color:Colors.green,
-                    margin: const EdgeInsets.only(bottom: 10),
-                    child: Text(
-                      _taskController.taskList[index].title.toString()
-                    ),
 
-            ),
-                );
+                 return AnimationConfiguration.staggeredList(
+                   position: index,
+                   child: SlideAnimation(
+                     child:FadeInAnimation(
+                       child:Row(
+                         children: [
+                           GestureDetector(
+                             onTap:(){
+                                _showBottomSheet(context, _taskController.taskList[index]);
+                             },
+                             child:TaskTile(_taskController.taskList[index])
+                           )
+                         ],
+                       )
+                     )
+                   )
+                 );
+
           });
         }),//OBS
     );
   }
 
+  _showBottomSheet(BuildContext context, Task task){
+
+
+  }
   _addDateBar(){
     return Container(
       margin: const EdgeInsets.only(top: 20, left: 20 ),

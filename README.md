@@ -1,6 +1,6 @@
 # flutter_to_do_app
 
-A new Flutter project.
+Project Android Todo app by Nguyen Duc Thanh and Tran Hoang Thin
 
 ## Getting Started
 

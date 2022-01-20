@@ -42,7 +42,10 @@ class _HomePageState extends State<HomePage> {
         children: [
           _addTaskBar(),
           _addDateBar(),
+          SizedBox(height: 10,),
           _showTasks(),
+
+
 
         ],
       )
@@ -54,12 +57,24 @@ class _HomePageState extends State<HomePage> {
         child:Obx((){
           return ListView.builder(
               itemCount: _taskController.taskList.length,
-              itemBuilder: (_, context){
-            return Container(
-              width: 100,
-              height: 50,
-              color:Colors.green,
-            );
+
+              itemBuilder: (_, index){
+                print(_taskController.taskList.length);
+                return GestureDetector(
+                  onTap: (){
+                    _taskController.delete(_taskController.taskList[index]);
+                  },
+                  child: Container(
+                    width: 100,
+                    height: 50,
+                    color:Colors.green,
+                    margin: const EdgeInsets.only(bottom: 10),
+                    child: Text(
+                      _taskController.taskList[index].title.toString()
+                    ),
+
+            ),
+                );
           });
         }),//OBS
     );
@@ -124,7 +139,12 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
-          MyButton(label:"+ Add Task", onTap: ()=> Get.to(AddTaskPage()))
+          MyButton(label:"+ Add Task", onTap: () async {
+            await Get.to(()=> AddTaskPage());
+            _taskController.getTasks();
+
+          }
+          )
         ],
       ),
     );

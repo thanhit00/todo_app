@@ -1,6 +1,7 @@
 import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_to_do_app/controllers/task_controller.dart';
 import 'package:flutter_to_do_app/models/task.dart';
 import 'package:flutter_to_do_app/services/notification_service.dart';

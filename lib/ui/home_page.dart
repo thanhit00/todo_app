@@ -88,8 +88,64 @@ class _HomePageState extends State<HomePage> {
   }
 
   _showBottomSheet(BuildContext context, Task task){
+    Get.bottomSheet(
+      Container(
+        padding: const EdgeInsets.only(top:4),
+        height: task.isCompleted == 1?
+        MediaQuery.of(context).size.height*0.24:
+        MediaQuery.of(context).size.height*0.32,
+        color: Get.isDarkMode?darkGrayClr:Colors.white,
+        child: Column(
+          children: [
+            Container(
+              height: 6,
+              width: 120,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Get.isDarkMode?Colors.grey[600]:Colors.grey[300]
+              )
+            ),
+            Spacer(),
+            task.isCompleted == 1
+            ?Container()
+                : _bottomSheetButton(
+                label: "Task Completed",
+                onTap: (){
+                  Get.back();
+                },
+              clr: primaryClr,
+              context:context
+            )
+          ],
 
+        ),
+      ),
+    );
+  }
+  _bottomSheetButton({
+    required String label,
+    required Function()? onTap,
+    required Color clr,
+    bool isClose = false,
+    required BuildContext context,
+}){
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 4),
+        height: 55,
+        width: MediaQuery.of(context).size.width*0.9 ,
 
+        decoration: BoxDecoration(
+          border: Border.all(
+            width: 2,
+            color: isClose == true?Colors.red:clr
+          ),
+          borderRadius: BorderRadius.circular(20),
+          color: isClose == true?Colors.red:clr,
+        ),
+      )
+    );
   }
   _addDateBar(){
     return Container(

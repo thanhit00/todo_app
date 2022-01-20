@@ -110,7 +110,7 @@ class NotifyHelper{
         ],
       ),
     );*/
-    Get.dialog(Text("Wellcome to flutter"));
+    Get.dialog(Text("Nhóm Thành Thìn"));
   }
 
 }

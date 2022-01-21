@@ -69,6 +69,7 @@ class _HomePageState extends State<HomePage> {
                 Task task = _taskController.taskList[index];
                 //print(task.toJson());
                 if(task.repeat=='Daily'){
+
                   return AnimationConfiguration.staggeredList(
                       position: index,
                       child: SlideAnimation(
@@ -294,7 +295,7 @@ class _HomePageState extends State<HomePage> {
             body: Get.isDarkMode?"Activated Light Theme":"Activated Dark Theme"
           );
 
-          notifyHelper.scheduledNotification();
+          //notifyHelper.scheduledNotification();
 
         },
         child: Icon(Get.isDarkMode ?Icons.wb_sunny_outlined:Icons.nightlight_round,

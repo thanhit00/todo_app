@@ -25,7 +25,7 @@ class NotifyHelper{
       final InitializationSettings initializationSettings =
       InitializationSettings(
       iOS: initializationSettingsIOS,
-      android:initializationSettingsAndroid,
+      android:initializationSettingsAndroid
     );
     await flutterLocalNotificationsPlugin.initialize(
         initializationSettings,
@@ -35,9 +35,11 @@ class NotifyHelper{
 
   displayNotification({required String title, required String body}) async {
     print("doing test");
-    var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
+    var androidPlatformChannelSpecifics =
+    new AndroidNotificationDetails(
         'your channel id', 'your channel name',// 'your channel description',
         importance: Importance.max, priority: Priority.high);
+
     var iOSPlatformChannelSpecifics = new IOSNotificationDetails();
     var platformChannelSpecifics = new NotificationDetails(
         android: androidPlatformChannelSpecifics, iOS: iOSPlatformChannelSpecifics);

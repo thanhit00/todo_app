@@ -48,9 +48,6 @@ class _HomePageState extends State<HomePage> {
 
           _showTasks(),
 
-
-
-
         ],
       )
 
@@ -69,6 +66,12 @@ class _HomePageState extends State<HomePage> {
                 Task task = _taskController.taskList[index];
                 //print(task.toJson());
                 if(task.repeat=='Daily'){
+                  DateTime date = DateFormat.jm().parse(task.startTime.toString());
+                  var myTime = DateFormat("HH:mm").format(date);
+                  notifyHelper.scheduledNotification(
+                    //int.parse(myTime.toString().split(":"))
+                  );
+                  
 
                   return AnimationConfiguration.staggeredList(
                       position: index,

@@ -38,7 +38,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       appBar: _appBar(),
       backgroundColor: context.theme.backgroundColor,
       body: Column(
@@ -46,7 +45,9 @@ class _HomePageState extends State<HomePage> {
           _addTaskBar(),
           _addDateBar(),
           SizedBox(height: 10,),
+
           _showTasks(),
+
 
 
 
@@ -57,30 +58,58 @@ class _HomePageState extends State<HomePage> {
   }
   _showTasks(){
     return Expanded(
+
         child:Obx((){
+          _taskController.getTasks();
           return ListView.builder(
               itemCount: _taskController.taskList.length,
 
               itemBuilder: (_, index){
-                print(_taskController.taskList.length);
 
-                 return AnimationConfiguration.staggeredList(
-                   position: index,
-                   child: SlideAnimation(
-                     child:FadeInAnimation(
-                       child:Row(
-                         children: [
-                           GestureDetector(
-                             onTap:(){
-                                _showBottomSheet(context, _taskController.taskList[index]);
-                             },
-                             child:TaskTile(_taskController.taskList[index])
-                           )
-                         ],
-                       )
-                     )
-                   )
-                 );
+                Task task = _taskController.taskList[index];
+                //print(task.toJson());
+                if(task.repeat=='Daily'){
+                  return AnimationConfiguration.staggeredList(
+                      position: index,
+                      child: SlideAnimation(
+                          child:FadeInAnimation(
+                              child:Row(
+                                children: [
+                                  GestureDetector(
+                                      onTap:(){
+                                        _showBottomSheet(context, task);
+                                      },
+                                      child:TaskTile(task)
+                                  )
+                                ],
+                              )
+                          )
+                      )
+                  );
+                }
+
+                if(task.date==DateFormat.yMd().format(_selectedDate)){
+                  return AnimationConfiguration.staggeredList(
+                      position: index,
+                      child: SlideAnimation(
+                          child:FadeInAnimation(
+                              child:Row(
+                                children: [
+                                  GestureDetector(
+                                      onTap:(){
+                                        _showBottomSheet(context, task);
+                                      },
+                                      child:TaskTile(task)
+                                  )
+                                ],
+                              )
+                          )
+                      )
+                  );
+                }else{
+                  return Container();
+                }
+
 
           });
         }),//OBS
@@ -111,10 +140,36 @@ class _HomePageState extends State<HomePage> {
                 : _bottomSheetButton(
                 label: "Task Completed",
                 onTap: (){
+                  _taskController.markTaskCompleted(task.id!);
+
                   Get.back();
                 },
               clr: primaryClr,
               context:context
+            ),
+
+            _bottomSheetButton(
+                label: "Delete Task",
+                onTap: (){
+                  _taskController.delete(task);
+
+                  Get.back();
+                },
+                clr: Colors.red[300]!,
+                context:context
+            ),
+            SizedBox(height: 20,),
+            _bottomSheetButton(
+                label: "Close",
+                onTap: (){
+                  Get.back();
+                },
+                clr: Colors.red[300]!,
+                isClose:true,
+                context:context
+            ),
+            SizedBox(
+              height: 10,
             )
           ],
 
@@ -134,15 +189,22 @@ class _HomePageState extends State<HomePage> {
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 4),
         height: 55,
-        width: MediaQuery.of(context).size.width*0.9 ,
+        width: MediaQuery.of(context).size.width*0.9,
 
         decoration: BoxDecoration(
           border: Border.all(
             width: 2,
-            color: isClose == true?Colors.red:clr
+            color: isClose == true?Get.isDarkMode?Colors.grey[600]!:Colors.grey[300]!:clr
           ),
           borderRadius: BorderRadius.circular(20),
-          color: isClose == true?Colors.red:clr,
+          color: isClose == true?Colors.transparent:clr,
+        ),
+        child: Center(
+          child: Text(
+              label,
+              style: isClose?titleStyle:titleStyle.copyWith(color: Colors.white),
+
+          ),
         ),
       )
     );
@@ -179,7 +241,10 @@ class _HomePageState extends State<HomePage> {
             )
         ),
         onDateChange: (date){
-          _selectedDate=date;
+          setState(() {
+            _selectedDate=date;
+          });
+
 
         },
       ),

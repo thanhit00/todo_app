@@ -57,7 +57,7 @@ class _HomePageState extends State<HomePage> {
     return Expanded(
 
         child:Obx((){
-          _taskController.getTasks();
+          //_taskController.getTasks();
           return ListView.builder(
               itemCount: _taskController.taskList.length,
 
@@ -69,7 +69,9 @@ class _HomePageState extends State<HomePage> {
                   DateTime date = DateFormat.jm().parse(task.startTime.toString());
                   var myTime = DateFormat("HH:mm").format(date);
                   notifyHelper.scheduledNotification(
-                    //int.parse(myTime.toString().split(":"))
+                    int.parse(myTime.toString().split(":")[0]),
+                    int.parse(myTime.toString().split(":")[1]),
+                    task
                   );
                   
 
